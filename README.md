@@ -1,4 +1,4 @@
-# About Spam Wall
+# Spam Wall
 Spam Wall is a WordPress plugin that harnesses the power of OpenAI's GPT models to intelligently filter and classify comments on WordPress sites, distinguishing between genuine interactions (ham) and spam with remarkable accuracy. This plugin offers a modern, AI-driven approach to maintaining clean and engaging comment sections, ensuring that valuable discussions are not buried under unwanted spam. It's an essential tool for website owners seeking to enhance user engagement and protect their site's integrity without manual intervention.
 
 ### Secure API Key Encryption
