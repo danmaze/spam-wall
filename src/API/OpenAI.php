@@ -9,6 +9,7 @@
 namespace SpamWall\API;
 
 use SpamWall\Utils\OptionKey;
+use SpamWall\Utils\EncryptionHelper;
 
 class OpenAI
 {
@@ -41,10 +42,12 @@ class OpenAI
 
     /**
      * Constructor for the OpenAI API handler class.
+     * Retrieves and decrypts the OpenAI API key from the database.
      */
     public function __construct()
     {
-        $this->api_key = get_option(OptionKey::OPENAI_API_KEY);
+        $encrypted_api_key = get_option(OptionKey::OPENAI_API_KEY);
+        $this->api_key = EncryptionHelper::decrypt($encrypted_api_key);
     }
 
     /**
