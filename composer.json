@@ -1,0 +1,19 @@
+{
+    "name": "danmaze/spam-wall",
+    "description": "Spam Wall harnesses the power of OpenAI's GPT models to intelligently filter and classify comments on WordPress sites, distinguishing between genuine interactions (ham) and spam with remarkable accuracy.",
+    "type": "wordpress-plugin",
+    "license": "\"GPL-3.0-or-later\"",
+    "autoload": {
+        "psr-4": {
+            "SpamWall\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Daniel Ihenetu",
+            "email": "ihenetudan@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
