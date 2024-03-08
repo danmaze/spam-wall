@@ -68,7 +68,7 @@ class OpenAI
             ],
             [
                 "role" => "user",
-                "content" => json_encode(['comment' => $commentContent, 'metadata' => $commentMetadata])
+                "content" => wp_json_encode(['comment' => $commentContent, 'metadata' => $commentMetadata])
             ]
         ];
 
@@ -91,7 +91,7 @@ class OpenAI
      */
     private function makeApiRequest($model, $messages)
     {
-        $body = json_encode([
+        $body = wp_json_encode([
             'model' => $model,
             'messages' => $messages,
         ]);
