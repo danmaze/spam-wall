@@ -17,16 +17,17 @@ class Classifier
      */
     public function init()
     {
-        add_filter('pre_comment_approved', [$this, 'classifyComment'], 10, 1);
+        add_filter('pre_comment_approved', [$this, 'classifyComment'], 10, 2);
     }
 
     /**
      * Classifies a comment as spam or ham.
      * 
+     * @param string|int $approved The approval status.
      * @param array $commentData Comment data.
-     * @return array Comment data, potentially modified to mark as spam.
+     * @return string|int Possibly modified approval status.
      */
-    public function classifyComment($commentData)
+    public function classifyComment($approved, $commentData)
     {
         $openAI = new OpenAI();
         $classification = $openAI->classifyComment($commentData['comment_content'], [
@@ -36,9 +37,9 @@ class Classifier
         ]);
 
         if ($classification === 'spam') {
-            $commentData['comment_approved'] = 'spam';
+            $approved = 'spam';
         }
 
-        return $commentData;
+        return $approved;
     }
 }
