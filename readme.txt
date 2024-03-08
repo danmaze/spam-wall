@@ -1,6 +1,6 @@
 === Spam Wall ===
 Contributors: ihenetudan
-Tags: comments, spam, ai, openai, gpt, filter, security
+Tags: comments, spam, ai, openai, gpt
 Requires at least: 5.3
 Tested up to: 6.4.3
 Requires PHP: 7.2
@@ -8,7 +8,7 @@ Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
 
-Spam Wall is a WordPress plugin that leverages OpenAI's GPT models to intelligently classify comments as spam or ham, enhancing comment section integrity.
+Protects your WordPress site from spam using OpenAI's GPT models for comment classification.
 
 == Description ==
 
