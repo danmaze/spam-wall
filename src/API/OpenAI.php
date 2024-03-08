@@ -19,21 +19,21 @@ class OpenAI
      * 
      * @var string
      */
-    private $api_key;
+    private $apiKey;
 
     /**
      * The OpenAI Chat Completions API endpoint.
      * 
      * @var string
      */
-    private $api_endpoint = 'https://api.openai.com/v1/chat/completions';
+    private $apiEndpoint = 'https://api.openai.com/v1/chat/completions';
 
     /**
      * Detailed instruction for the model.
      * 
      * @var string
      */
-    private $system_message = <<<EOT
+    private $systemMessage = <<<EOT
         You are a highly efficient assistant. Your task is to assess the content and metadata of the following comment
         and determine its nature accurately. It's crucial that you analyze the given information thoroughly and provide
         a response that categorically states whether the comment is 'spam' or 'ham'. Your response should be limited to
@@ -47,7 +47,7 @@ class OpenAI
     public function __construct()
     {
         $encrypted_api_key = get_option(OptionKey::OPENAI_API_KEY);
-        $this->api_key = EncryptionHelper::decrypt($encrypted_api_key);
+        $this->apiKey = EncryptionHelper::decrypt($encrypted_api_key);
     }
 
     /**
@@ -57,29 +57,29 @@ class OpenAI
      * @param array $comment_metadata Metadata associated with the comment.
      * @return string|null 'spam', 'ham', or null on failure.
      */
-    public function classify_comment($comment_content, $comment_metadata)
+    public function classifyComment($commentContent, $commentMetadata)
     {
         $model = get_option(OptionKey::MODEL_PREFERENCE, 'gpt-3.5-turbo-0125'); // Default to GPT-3.5 for lower costs
 
         $messages = [
             [
                 "role" => "system",
-                "content" => $this->system_message
+                "content" => $this->systemMessage
             ],
             [
                 "role" => "user",
-                "content" => json_encode(['comment' => $comment_content, 'metadata' => $comment_metadata])
+                "content" => json_encode(['comment' => $commentContent, 'metadata' => $commentMetadata])
             ]
         ];
 
-        $response = $this->make_api_request($model, $messages);
+        $response = $this->makeApiRequest($model, $messages);
 
         if (is_wp_error($response)) {
             return null; // Could log error internally or handle as needed later
         }
 
         $body = json_decode(wp_remote_retrieve_body($response), true);
-        return $this->interpret_response($body);
+        return $this->interpretResponse($body);
     }
 
     /**
@@ -89,7 +89,7 @@ class OpenAI
      * @param array $messages The conversation messages.
      * @return array|WP_Error
      */
-    private function make_api_request($model, $messages)
+    private function makeApiRequest($model, $messages)
     {
         $body = json_encode([
             'model' => $model,
@@ -100,13 +100,13 @@ class OpenAI
             'body' => $body,
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->api_key,
+                'Authorization' => 'Bearer ' . $this->apiKey,
             ],
             'method' => 'POST',
             'timeout' => 45,
         ];
 
-        return wp_remote_post($this->api_endpoint, $args);
+        return wp_remote_post($this->apiEndpoint, $args);
     }
 
     /** 
@@ -115,10 +115,10 @@ class OpenAI
      * @param array $response_body The decoded response body.
      * @return string|null 'spam', 'ham', or null if the response is not clear.
      */
-    private function interpret_response($response_body)
+    private function interpretResponse($responseBody)
     {
-        if (!empty($response_body['choices'][0]['message']['content'])) {
-            $content = strtolower(trim($response_body['choices'][0]['message']['content']));
+        if (!empty($responseBody['choices'][0]['message']['content'])) {
+            $content = strtolower(trim($responseBody['choices'][0]['message']['content']));
             // Assuming the model follows the instructions, we can expect the response to be
             // either 'spam' or 'ham' precisely.
             if ($content === 'spam') {

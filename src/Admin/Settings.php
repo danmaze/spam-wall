@@ -1,5 +1,11 @@
 <?php
 
+/** 
+ * Handles the settings page for the plugin.
+ * 
+ * @package SpamWall
+ */
+
 namespace SpamWall\Admin;
 
 use SpamWall\Utils\EncryptionHelper;

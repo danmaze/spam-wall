@@ -1,8 +1,15 @@
 <?php
 
+/** 
+ * The main plugin class.
+ * 
+ * @package SpamWall
+ */
+
 namespace SpamWall;
 
 use SpamWall\Admin\Settings;
+use SpamWall\Comment\Classifier;
 
 class SpamWallManager
 {
@@ -12,6 +19,7 @@ class SpamWallManager
     public function run()
     {
         $this->defineAdminHooks();
+        $this->defineCommentHooks();
     }
 
     /**
@@ -21,5 +29,14 @@ class SpamWallManager
     {
         $settings = new Settings();
         add_action('plugins_loaded', [$settings, 'init']);
+    }
+
+    /**
+     * Register all hooks related to comment processing.
+     */
+    private function defineCommentHooks()
+    {
+        $classifier = new Classifier();
+        $classifier->init();
     }
 }
