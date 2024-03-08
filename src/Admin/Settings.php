@@ -97,7 +97,7 @@ class Settings
     {
         $encrypted_api_key = get_option(OptionKey::OPENAI_API_KEY);
         $api_key = EncryptionHelper::decrypt($encrypted_api_key);
-        echo '<input type="text" name="' . OptionKey::OPENAI_API_KEY . '" value="' . esc_attr($api_key) . '" class="regular-text">';
+        echo '<input type="password" name="' . OptionKey::OPENAI_API_KEY . '" value="' . esc_attr($api_key) . '" class="regular-text">';
     }
 
     /**
