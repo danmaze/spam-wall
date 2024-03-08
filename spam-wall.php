@@ -22,6 +22,8 @@ if (!defined('WPINC')) {
 // Autoload classes
 require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 
+use SpamWall\SpamWallManager;
+
 /**
  * Code to run during plugin activation
  */
@@ -39,3 +41,6 @@ function spam_wall_deactivate()
     // Deactivation logic here (if needed)
 }
 register_deactivation_hook(__FILE__, 'spam_wall_deactivate');
+
+// Run the plugin
+(new SpamWallManager())->run();
