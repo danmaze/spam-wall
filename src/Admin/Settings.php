@@ -103,7 +103,7 @@ class Settings
     {
         $encrypted_api_key = get_option(OptionKey::OPENAI_API_KEY);
         $api_key = EncryptionHelper::decrypt($encrypted_api_key);
-        echo '<input type="password" name="' . OptionKey::OPENAI_API_KEY . '" value="' . esc_attr($api_key) . '" class="regular-text">';
+        echo '<input type="password" name="' . esc_attr(OptionKey::OPENAI_API_KEY) . '" value="' . esc_attr($api_key) . '" class="regular-text">';
     }
 
     /**
@@ -113,7 +113,7 @@ class Settings
     {
         $model_preference = get_option(OptionKey::MODEL_PREFERENCE, 'gpt-3.5-turbo-0125');  // Default to GPT-3.5 for lower costs
         ?>
-        <select name="<?php echo OptionKey::MODEL_PREFERENCE; ?>">
+        <select name="<?php echo esc_attr(OptionKey::MODEL_PREFERENCE); ?>">
             <option value="gpt-3.5-turbo-0125" <?php selected($model_preference, 'gpt-3.5-turbo-0125'); ?>>GPT-3.5 Turbo (Lower Costs)</option>
             <option value="gpt-4-0125-preview" <?php selected($model_preference, 'gpt-4-0125-preview'); ?>>GPT-4 Turbo (Better Performance)</option>
         </select>
