@@ -3,8 +3,8 @@
 namespace SpamWall\Utils;
 
 /**
- * Responsible for encrypting and decrypting data such as the 
- * OpenAI API key before storing it in the database.
+ * Classs responsible for encrypting and decrypting sensitive data 
+ * such as API keys before storing it in the database.
  */
 class EncryptionHelper
 {

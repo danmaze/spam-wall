@@ -14,12 +14,10 @@
  * Text Domain:       spam-wall
  */
 
-// If this file is called directly, abort.
 if (!defined('WPINC')) {
     die;
 }
 
-// Autoload classes
 require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 
 use SpamWall\SpamWallManager;
@@ -27,25 +25,6 @@ use SpamWall\Admin\Settings;
 use SpamWall\Comment\Classifier;
 use SpamWall\API\OpenAI;
 
-/**
- * Code to run during plugin activation
- */
-function spam_wall_activate()
-{
-    // Activation logic here (if needed)
-}
-register_activation_hook(__FILE__, 'spam_wall_activate');
-
-/**
- * Code to run during plugin deactivation
- */
-function spam_wall_deactivate()
-{
-    // Deactivation logic here (if needed)
-}
-register_deactivation_hook(__FILE__, 'spam_wall_deactivate');
-
-// Run the plugin
 $settings = new Settings();
 $openAI = new OpenAI();
 $classifier = new Classifier($openAI);

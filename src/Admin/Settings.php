@@ -1,16 +1,15 @@
 <?php
 
-/** 
- * Handles the settings page for the plugin.
- * 
- * @package SpamWall
- */
-
 namespace SpamWall\Admin;
 
 use SpamWall\Utils\EncryptionHelper;
 use SpamWall\Utils\OptionKey;
 
+/** 
+ * Handles the settings page for the plugin.
+ * 
+ * @package SpamWall
+ */
 class Settings
 {
     const SETTINGS_PAGE_SLUG = 'spam-wall-settings';
@@ -30,11 +29,11 @@ class Settings
     public function addSettingsPage()
     {
         add_options_page(
-            'Spam Wall Settings', // Page title
-            'Spam Wall', // Menu title
-            'manage_options', // Capability
-            self::SETTINGS_PAGE_SLUG, // Menu slug
-            [$this, 'createSettingsPage'] // Callback function
+            'Spam Wall Settings',
+            'Spam Wall',
+            'manage_options',
+            self::SETTINGS_PAGE_SLUG,
+            [$this, 'createSettingsPage']
         );
     }
 
@@ -43,37 +42,33 @@ class Settings
      */
     public function registerSettings()
     {
-        // Register the API key setting with a custom sanitization callback
         register_setting(self::SETTINGS_PAGE_SLUG, OptionKey::OPENAI_API_KEY, [
             'sanitize_callback' => [$this, 'sanitizeApiKey']
         ]);
 
-        // Register the model selection setting
         register_setting(self::SETTINGS_PAGE_SLUG, OptionKey::MODEL_PREFERENCE);
 
         add_settings_section(
-            'spam_wall_api_settings', // ID
-            'OpenAI API Settings', // Title
-            null, // Callback
-            self::SETTINGS_PAGE_SLUG // Page
+            'spam_wall_api_settings',
+            'OpenAI API Settings',
+            null,
+            self::SETTINGS_PAGE_SLUG
         );
 
-        // API key field
         add_settings_field(
-            OptionKey::OPENAI_API_KEY, // ID
-            'OpenAI API Key', // Title
-            [$this, 'apiKeyFieldCallback'], // Callback
-            self::SETTINGS_PAGE_SLUG, // Page
-            'spam_wall_api_settings' // Section
+            OptionKey::OPENAI_API_KEY,
+            'OpenAI API Key',
+            [$this, 'apiKeyFieldCallback'],
+            self::SETTINGS_PAGE_SLUG,
+            'spam_wall_api_settings'
         );
 
-        // Model preference field
         add_settings_field(
-            OptionKey::MODEL_PREFERENCE, // ID
-            'GPT Model Preference', // Title
-            [$this, 'modelPreferenceFieldCallback'], // Callback
-            self::SETTINGS_PAGE_SLUG, // Page
-            'spam_wall_api_settings' // Section
+            OptionKey::MODEL_PREFERENCE,
+            'GPT Model Preference',
+            [$this, 'modelPreferenceFieldCallback'],
+            self::SETTINGS_PAGE_SLUG,
+            'spam_wall_api_settings'
         );
     }
 
@@ -103,7 +98,8 @@ class Settings
     {
         $encrypted_api_key = get_option(OptionKey::OPENAI_API_KEY);
         $api_key = EncryptionHelper::decrypt($encrypted_api_key);
-        echo '<input type="password" name="' . esc_attr(OptionKey::OPENAI_API_KEY) . '" value="' . esc_attr($api_key) . '" class="regular-text">';
+        echo '<input type="password" name="' . esc_attr(OptionKey::OPENAI_API_KEY) .
+            '" value="' . esc_attr($api_key) . '" class="regular-text">';
     }
 
     /**
@@ -111,7 +107,7 @@ class Settings
      */
     public function modelPreferenceFieldCallback()
     {
-        $model_preference = get_option(OptionKey::MODEL_PREFERENCE, 'gpt-3.5-turbo-0125');  // Default to GPT-3.5 for lower costs
+        $model_preference = get_option(OptionKey::MODEL_PREFERENCE, 'gpt-3.5-turbo-0125');
         ?>
         <select name="<?php echo esc_attr(OptionKey::MODEL_PREFERENCE); ?>">
             <option value="gpt-3.5-turbo-0125" <?php selected($model_preference, 'gpt-3.5-turbo-0125'); ?>>GPT-3.5 Turbo (Lower Costs)</option>
@@ -128,9 +124,8 @@ class Settings
      */
     public function sanitizeApiKey($api_key)
     {
-        // Sanitize the API key
+
         $sanitized_api_key = sanitize_text_field($api_key);
-        // Encrypt the API key if encryption is set up
         return EncryptionHelper::encrypt($sanitized_api_key);
     }
 }

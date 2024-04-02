@@ -1,15 +1,14 @@
 <?php
 
+namespace SpamWall\Comment;
+
+use SpamWall\API\OpenAI;
+
 /**
  * Handles comment classification using OpenAI.
  * 
  * @package SpamWall
  */
-
-namespace SpamWall\Comment;
-
-use SpamWall\API\OpenAI;
-
 class Classifier
 {
     /**

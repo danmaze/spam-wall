@@ -1,16 +1,15 @@
 <?php
 
-/** 
- * The main plugin class.
- * 
- * @package SpamWall
- */
-
 namespace SpamWall;
 
 use SpamWall\Admin\Settings;
 use SpamWall\Comment\Classifier;
 
+/** 
+ * The main plugin class (manager).
+ * 
+ * @package SpamWall
+ */
 class SpamWallManager
 {
     /**

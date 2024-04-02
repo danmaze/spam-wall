@@ -1,16 +1,15 @@
 <?php
 
-/** 
- * Handles API interactions with OpenAI, specifically for classifying comments.
- * 
- * @package SpamWall
- */
-
 namespace SpamWall\API;
 
 use SpamWall\Utils\OptionKey;
 use SpamWall\Utils\EncryptionHelper;
 
+/** 
+ * Handles API interactions with OpenAI, specifically for classifying comments.
+ * 
+ * @package SpamWall
+ */
 class OpenAI
 {
 
