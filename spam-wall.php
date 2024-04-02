@@ -23,6 +23,9 @@ if (!defined('WPINC')) {
 require_once plugin_dir_path(__FILE__) . 'vendor/autoload.php';
 
 use SpamWall\SpamWallManager;
+use SpamWall\Admin\Settings;
+use SpamWall\Comment\Classifier;
+use SpamWall\API\OpenAI;
 
 /**
  * Code to run during plugin activation
@@ -43,4 +46,8 @@ function spam_wall_deactivate()
 register_deactivation_hook(__FILE__, 'spam_wall_deactivate');
 
 // Run the plugin
-(new SpamWallManager())->run();
+$settings = new Settings();
+$openAI = new OpenAI();
+$classifier = new Classifier($openAI);
+$spamWallManager = new SpamWallManager($settings, $classifier);
+$spamWallManager->run();

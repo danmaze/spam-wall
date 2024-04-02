@@ -14,6 +14,32 @@ use SpamWall\Comment\Classifier;
 class SpamWallManager
 {
     /**
+     * The Settings instance.
+     *
+     * @var Settings
+     */
+    private $settings;
+
+    /**
+     * The Classifier instance.
+     *
+     * @var Classifier
+     */
+    private $classifier;
+
+    /**
+     * SpamWallManager constructor.
+     *
+     * @param Settings $settings The Settings instance.
+     * @param Classifier $classifier The Classifier instance.
+     */
+    public function __construct(Settings $settings, Classifier $classifier)
+    {
+        $this->settings = $settings;
+        $this->classifier = $classifier;
+    }
+
+    /**
      * Run the plugin initialization and hook into WordPress.
      */
     public function run()
@@ -27,8 +53,7 @@ class SpamWallManager
      */
     private function defineAdminHooks()
     {
-        $settings = new Settings();
-        add_action('plugins_loaded', [$settings, 'init']);
+        add_action('plugins_loaded', [$this->settings, 'init']);
     }
 
     /**
@@ -36,7 +61,6 @@ class SpamWallManager
      */
     private function defineCommentHooks()
     {
-        $classifier = new Classifier();
-        $classifier->init();
+        $this->classifier->init();
     }
 }
