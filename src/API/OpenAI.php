@@ -2,6 +2,7 @@
 
 namespace SpamWall\API;
 
+use Exception;
 use SpamWall\Utils\OptionKey;
 use SpamWall\Utils\EncryptionHelper;
 
@@ -62,13 +63,13 @@ class OpenAI
     /**
      * Classifies a comment as spam or not spam.
      * 
-     * @param string $comment_content The content of the comment.
-     * @param array $comment_metadata Metadata associated with the comment.
+     * @param string $commentContent The content of the comment.
+     * @param array $commentMetadata Metadata associated with the comment.
      * @return string|null 'spam', 'ham', or null on failure.
      */
     public function classifyComment($commentContent, $commentMetadata)
     {
-        $model = get_option(OptionKey::MODEL_PREFERENCE, 'gpt-3.5-turbo-0125'); // Default to GPT-3.5 for lower costs
+        $model = get_option(OptionKey::MODEL_PREFERENCE, 'gpt-3.5-turbo-0125');
 
         $messages = [
             [
@@ -84,11 +85,17 @@ class OpenAI
         $response = $this->makeApiRequest($model, $messages);
 
         if (is_wp_error($response)) {
-            return null; // Could log error internally or handle as needed later
+            return null;
         }
 
-        $body = json_decode(wp_remote_retrieve_body($response), true);
-        return $this->interpretResponse($body);
+        try {
+            $body = json_decode(wp_remote_retrieve_body($response), true);
+            return $this->interpretResponse($body);
+        } catch (Exception $e) {
+            // Log the exception for debugging purposes
+            error_log('Error during OpenAI response parsing: ' . $e->getMessage());
+            return null;
+        }
     }
 
     /**
