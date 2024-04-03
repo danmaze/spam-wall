@@ -98,7 +98,7 @@ class OpenAI
      * @param array $messages The conversation messages.
      * @return array|WP_Error
      */
-    private function makeApiRequest($model, $messages)
+    protected function makeApiRequest($model, $messages)
     {
         $body = wp_json_encode([
             'model' => $model,
@@ -124,7 +124,7 @@ class OpenAI
      * @param array $response_body The decoded response body.
      * @return string|null 'spam', 'ham', or null if the response is not clear.
      */
-    private function interpretResponse($responseBody)
+    protected function interpretResponse($responseBody)
     {
         if (!empty($responseBody['choices'][0]['message']['content'])) {
             $content = strtolower(trim($responseBody['choices'][0]['message']['content']));
