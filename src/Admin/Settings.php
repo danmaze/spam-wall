@@ -15,6 +15,22 @@ class Settings
     const SETTINGS_PAGE_SLUG = 'spam-wall-settings';
 
     /**
+     * The EncryptionHelper instance.
+     * 
+     * @var EncryptionHelper
+     */
+    private $encryptionHelper;
+
+    /**
+     * Constructor for the Settings class.
+     * Initializes the EncryptionHelper instance.
+     */
+    public function __construct()
+    {
+        $this->encryptionHelper = new EncryptionHelper();
+    }
+
+    /**
      * Initialize the Settings page hooks.
      */
     public function init()
@@ -97,7 +113,7 @@ class Settings
     public function apiKeyFieldCallback()
     {
         $encrypted_api_key = get_option(OptionKey::OPENAI_API_KEY);
-        $api_key = EncryptionHelper::decrypt($encrypted_api_key);
+        $api_key = $this->encryptionHelper->decrypt($encrypted_api_key);
         echo '<input type="password" name="' . esc_attr(OptionKey::OPENAI_API_KEY) .
             '" value="' . esc_attr($api_key) . '" class="regular-text">';
     }
@@ -124,8 +140,7 @@ class Settings
      */
     public function sanitizeApiKey($api_key)
     {
-
         $sanitized_api_key = sanitize_text_field($api_key);
-        return EncryptionHelper::encrypt($sanitized_api_key);
+        return $this->encryptionHelper->encrypt($sanitized_api_key);
     }
 }
