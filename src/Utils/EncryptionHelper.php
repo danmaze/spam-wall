@@ -15,7 +15,7 @@ class EncryptionHelper
      * @param string $value Value to encrypt.
      * @return string Encrypted value, or original value if encryption is not set up.
      */
-    public static function encrypt($value)
+    public function encrypt($value)
     {
         if (!extension_loaded('openssl') || !defined('SPAM_WALL_ENCRYPTION_KEY')) {
             // Encryption not available or key not defined, return orignal value
@@ -40,7 +40,7 @@ class EncryptionHelper
      * @param string $encryptedValue Value to decrypt.
      * @return string Decrypted value, or original value if decryption is not set up or fails.
      */
-    public static function decrypt($encryptedValue)
+    public function decrypt($encryptedValue)
     {
         if (!extension_loaded('openssl') || !defined('SPAM_WALL_ENCRYPTION_KEY')) {
             // Decryption not available or key not defined, return original value.

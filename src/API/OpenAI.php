@@ -21,6 +21,13 @@ class OpenAI
     private $apiKey;
 
     /**
+     * The EncryptionHelper instance.
+     * 
+     * @var EncryptionHelper
+     */
+    private $encryptionHelper;
+
+    /**
      * The OpenAI Chat Completions API endpoint.
      * 
      * @var string
@@ -42,11 +49,14 @@ class OpenAI
     /**
      * Constructor for the OpenAI API handler class.
      * Retrieves and decrypts the OpenAI API key from the database.
+     * 
+     * @param EncryptionHelper $encryptionHelper The EncryptionHelper instance.
      */
-    public function __construct()
+    public function __construct(EncryptionHelper $encryptionHelper)
     {
+        $this->encryptionHelper = $encryptionHelper;
         $encrypted_api_key = get_option(OptionKey::OPENAI_API_KEY);
-        $this->apiKey = EncryptionHelper::decrypt($encrypted_api_key);
+        $this->apiKey = $this->encryptionHelper->decrypt($encrypted_api_key);
     }
 
     /**
