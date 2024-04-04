@@ -6,9 +6,11 @@ namespace SpamWall\Tests\Unit;
 
 use Brain\Monkey;
 use PHPUnit\Framework\TestCase;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 
 abstract class AbstractUnitTestCase extends TestCase
 {
+    use MockeryPHPUnitIntegration;
 
     /**
      * Sets up the environment.

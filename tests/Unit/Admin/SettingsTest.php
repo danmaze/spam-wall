@@ -19,8 +19,6 @@ use SpamWall\Utils\EncryptionHelper;
  */
 class SettingsTest extends AbstractUnitTestCase
 {
-    use MockeryPHPUnitIntegration;
-
     /**
      * Sets up the environment before each test.
      *

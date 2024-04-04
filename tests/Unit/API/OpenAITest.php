@@ -20,8 +20,6 @@ use SpamWall\Utils\OptionKey;
  */
 class OpenAITest extends AbstractUnitTestCase
 {
-    use MockeryPHPUnitIntegration;
-
     /**
      * Sets up the environment.
      *

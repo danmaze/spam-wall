@@ -43,7 +43,6 @@ class EncryptionHelper
     public function decrypt($encryptedValue)
     {
         if (!extension_loaded('openssl') || !defined('SPAM_WALL_ENCRYPTION_KEY')) {
-            // Decryption not available or key not defined, return original value.
             return $encryptedValue;
         }
 
@@ -51,10 +50,14 @@ class EncryptionHelper
         $key = substr(hash('sha256', SPAM_WALL_ENCRYPTION_KEY, true), 0, 32);
         $data = base64_decode($encryptedValue);
         if ($data === false) {
-            return $encryptedValue;  // Fallback to original value on base64 decode failure.
+            return $encryptedValue;
         }
 
         $ivLength = openssl_cipher_iv_length($method);
+        if (strlen($data) < $ivLength) {
+            return $encryptedValue;
+        }
+
         $iv = substr($data, 0, $ivLength);
         $encrypted = substr($data, $ivLength);
 
