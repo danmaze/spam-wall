@@ -44,7 +44,7 @@ class Settings
      */
     public function addSettingsPage()
     {
-        return add_options_page(
+        add_options_page(
             'Spam Wall Settings',
             'Spam Wall',
             'manage_options',

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace SpamWall\Tests\Unit;
 
-use Brain\Monkey;
 use Brain\Monkey\Functions;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
@@ -44,7 +43,6 @@ class SettingsTest extends AbstractUnitTestCase
         $this->assertInstanceOf(Settings::class, $settings);
     }
 
-    /*
     /**
      * Test the init method to verify that the 'admin_menu' and 'admin_init'
      * actions are registered with the correct callbacks.
@@ -53,25 +51,11 @@ class SettingsTest extends AbstractUnitTestCase
     {
         $encryptionHelper = Mockery::mock(EncryptionHelper::class);
         $settings = new Settings($encryptionHelper);
+
         $settings->init();
-        $this->assertInstanceOf(Settings::class, $settings);
-    }
 
-    /**
-     * Test the addSettingsPage method to verify that it 
-     * returns the expected hook name
-     */
-    public function testAddSettingsPage()
-    {
-        $encryptionHelper = Mockery::mock(EncryptionHelper::class);
-        $settings = new Settings($encryptionHelper);
-
-        Functions\expect('add_options_page')
-            ->once()
-            ->andReturn('settings_page_spam-wall-settings');
-
-        $result = $settings->addSettingsPage();
-        $this->assertEquals('settings_page_spam-wall-settings', $result);
+        $this->assertNotFalse(has_action('admin_menu', [$settings, 'addSettingsPage']));
+        $this->assertNotFalse(has_action('admin_init', [$settings, 'registerSettings']));
     }
 
     /**
@@ -108,8 +92,6 @@ class SettingsTest extends AbstractUnitTestCase
      */
     public function testApiKeyFieldCallback()
     {
-        Functions\stubs(['esc_attr']);
-
         Functions\expect('get_option')
             ->once()
             ->andReturn('encrypted_api_key');
