@@ -92,8 +92,7 @@ class OpenAI
             $body = json_decode(wp_remote_retrieve_body($response), true);
             return $this->interpretResponse($body);
         } catch (Exception $e) {
-            // Log the exception for debugging purposes
-            error_log('Error during OpenAI response parsing: ' . $e->getMessage());
+            // Log the exception for debugging purposes here if necessary
             return null;
         }
     }

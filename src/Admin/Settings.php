@@ -25,9 +25,9 @@ class Settings
      * Constructor for the Settings class.
      * Initializes the EncryptionHelper instance.
      */
-    public function __construct()
+    public function __construct(EncryptionHelper $encryptionHelper)
     {
-        $this->encryptionHelper = new EncryptionHelper();
+        $this->encryptionHelper = $encryptionHelper;
     }
 
     /**
@@ -44,7 +44,7 @@ class Settings
      */
     public function addSettingsPage()
     {
-        add_options_page(
+        return add_options_page(
             'Spam Wall Settings',
             'Spam Wall',
             'manage_options',

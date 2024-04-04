@@ -26,8 +26,8 @@ use SpamWall\Comment\Classifier;
 use SpamWall\API\OpenAI;
 use SpamWall\Utils\EncryptionHelper;
 
-$settings = new Settings();
 $encryptionHelper = new EncryptionHelper();
+$settings = new Settings($encryptionHelper);
 $openAI = new OpenAI($encryptionHelper);
 $classifier = new Classifier($openAI);
 $spamWallManager = new SpamWallManager($settings, $classifier);
