@@ -6,7 +6,6 @@ namespace SpamWall\Tests\Unit;
 
 use Brain\Monkey\Functions;
 use Mockery;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use SpamWall\Admin\Settings;
 use SpamWall\Utils\EncryptionHelper;
 
